@@ -110,7 +110,7 @@ namespace CVGenerator_CSharp
             container.Column(x =>
             {
                 x.Item().BorderTop(1)
-                    .Text("Skill")
+                    .Text("Skills")
                     .FontSize(HeaderTextSize);
                 x.Spacing(5);
                 /*for (int i = 0; i < personDetail.Skills.Count; i++)
