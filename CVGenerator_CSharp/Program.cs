@@ -8,9 +8,11 @@ var pdetail = Newtonsoft.Json.JsonConvert.DeserializeObject<PersonDetail>(File.R
 
 pdetail.Expierences = pdetail.Expierences.OrderByDescending(x => x.StartDate).ToList();
 pdetail.Education = pdetail.Education.OrderByDescending(x => x.StartDate).ToList();
+pdetail.Skills = pdetail.Skills.OrderByDescending(x=> x.Level).ToList();
 
 Settings.License = LicenseType.Community;
 
 CVDocument document = new CVDocument(pdetail.GitHub, pdetail);
 document
-    .GeneratePdf($"./CV-{pdetail.FullName}.pdf");
+    .ShowInPreviewer();
+    // .GeneratePdf($"./CV-{pdetail.FullName}.pdf");

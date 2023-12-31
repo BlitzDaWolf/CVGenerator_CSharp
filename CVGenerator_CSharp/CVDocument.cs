@@ -66,25 +66,9 @@ namespace CVGenerator_CSharp
                 x.Item().PaddingBottom(2).Element(ComposeDetail);
                 x.Item().Element(ComposeEducations);
                 x.Item().Element(ComposeExpierences);
+                x.Item().Element(ComposeSkils);
                 x.Item().Element(ComposeRepositories);
             });
-        }
-
-        void ComposeRepositories(IContainer container, Repository repository)
-        {
-            container
-                .BorderTop(1)
-                .BorderColor("#777")
-                .Column(x =>
-                {
-                    x.Item()
-                        .Hyperlink(repository.HtmlUrl)
-                        .Text(repository.Name);
-                    x.Item()
-                        .Text(repository.Description);
-                    x.Item()
-                        .Text(repository.Language);
-                });
         }
 
         void ComposeDetail(IContainer container)
@@ -94,8 +78,8 @@ namespace CVGenerator_CSharp
                 c.Item().Row(x =>
                 {
                     //x.AutoItem().Hyperlink("mailto:wouters.sameddy@hotmail.com").Text("wouters.sameddy@hotmail.com");
-                    x.RelativeItem().AlignLeft().Element(t => ComposeURL(t, "Email: ", "mailto:wouters.sameddy@hotmail.com", "wouters.sameddy@hotmail.com"));
-                    x.RelativeItem().AlignRight().Element(t => ComposeURL(t, "Phone: ", "tel:+32487239038", "+32487239038"));
+                    x.RelativeItem().AlignLeft().Element(t => ComposeURL(t, "Email: ", $"mailto:{personDetail.Email}", personDetail.Email));
+                    x.RelativeItem().AlignRight().Element(t => ComposeURL(t, "Phone: ", $"tel:{personDetail.Phone}", personDetail.Phone));
                 });
                 c.Item().Row(x =>
                 {
@@ -119,6 +103,52 @@ namespace CVGenerator_CSharp
                 r.AutoItem().Hyperlink(url).Text(urlText);
             });
         }
+
+
+        void ComposeSkils(IContainer container)
+        {
+            container.Column(x =>
+            {
+                x.Item().BorderTop(1)
+                    .Text("Skill")
+                    .FontSize(HeaderTextSize);
+                x.Spacing(5);
+                /*for (int i = 0; i < personDetail.Skills.Count; i++)
+                {
+                    x.Item().Row(row =>
+                    {
+                        row.Spacing(5);
+                        row.AutoItem().Text($"{i+1}. ");
+                        row.RelativeItem().Element(x => ComposeSkill(x, personDetail.Skills[i]));
+                    });
+                }*/
+
+                for (int i = 0; i < Math.Ceiling(personDetail.Skills.Count / 3d); i++)
+                {
+                    var items = personDetail.Skills.Skip(i * 3).Take(3).ToList();
+                    x.Item().Row(row =>
+                    {
+                        row.Spacing(50);
+                        if (items.Count >= 1) row.AutoItem().AlignLeft().Element(x => ComposeSkill(x, items[0]));
+                        if (items.Count >= 2) row.AutoItem().AlignLeft().Element(x => ComposeSkill(x, items[1]));
+                        if (items.Count >= 3) row.AutoItem().AlignLeft().Element(x => ComposeSkill(x, items[2]));
+                    });
+                }
+
+                x.Item().PaddingBottom(2);
+            });
+        }
+
+        void ComposeSkill(IContainer container, Skill skill)
+        {
+            container.Row(r =>
+            {
+                r.AutoItem().Width(100).AlignLeft().Text(skill.Name);
+                r.AutoItem().AlignRight().Text($"{skill.Level} / 5");
+            });
+        }
+
+
 
         void ComposeEducations(IContainer container)
         {
@@ -150,12 +180,14 @@ namespace CVGenerator_CSharp
             });
         }
 
+
+
         void ComposeExpierences(IContainer container)
         {
             container.Column(x =>
             {
                 x.Item().BorderTop(1)
-                    .Text("Expierence")
+                    .Text("experience")
                     .FontSize(HeaderTextSize);
                 x.Spacing(20);
                 foreach (var expierence in personDetail.Expierences)
@@ -181,6 +213,8 @@ namespace CVGenerator_CSharp
             });
         }
 
+
+
         void ComposeRepositories(IContainer container)
         {
             container.Column(x =>
@@ -194,6 +228,23 @@ namespace CVGenerator_CSharp
                     x.Item().Element(y => ComposeRepositories(y, repository));
                 }
             });
+        }
+
+        void ComposeRepositories(IContainer container, Repository repository)
+        {
+            container
+                .BorderTop(1)
+                .BorderColor("#777")
+                .Column(x =>
+                {
+                    x.Item()
+                        .Hyperlink(repository.HtmlUrl)
+                        .Text(repository.Name);
+                    x.Item()
+                        .Text(repository.Description);
+                    x.Item()
+                        .Text(repository.Language);
+                });
         }
     }
 }

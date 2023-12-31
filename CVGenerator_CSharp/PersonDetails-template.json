@@ -4,6 +4,8 @@
   "DriverLicence": "<licences>",
   "GitHub": "<github account>",
   "LinkedIn": "<Linkedin Link>",
+  "Email": "",
+  "Phone": "",
   "Education": [
     {
       "SchoolName": "<School-name>",
@@ -19,6 +21,12 @@
       "Desctiption": "<Job-desctiption>",
       "StartDate": "2018-01-01T00:00:00",
       "EndDate": "2018-01-01T00:00:00"
+    }
+  ],
+  "Skills": [
+    {
+      "Name": "<Skill-name>",
+      "Level": "<1-5>"
     }
   ]
 }
