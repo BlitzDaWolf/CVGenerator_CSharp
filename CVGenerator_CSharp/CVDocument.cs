@@ -8,11 +8,14 @@ namespace CVGenerator_CSharp
 {
     public class CVDocument : IDocument
     {
-        private List<Repository> repositories;
+        private List<Repository> repositories = new List<Repository>();
         private PersonDetail personDetail;
+
+        int HeaderTextSize = 25;
 
         public CVDocument(string userName, PersonDetail personDetail)
         {
+            Console.WriteLine($"Getting {userName} github data");
             var gh = new GitHub();
             var v = gh.GetRepositoriesAsync(userName);
             v.Wait();
@@ -28,7 +31,8 @@ namespace CVGenerator_CSharp
             container.Page(page =>
             {
                 page.Size(PageSizes.A4);
-                page.Margin(50);
+                page.DefaultTextStyle(x => x.FontSize(15));
+                page.Margin(1, Unit.Centimetre);
 
                 page.Header().Element(ComposeHeader);
                 page.Content().Element(ComposeContent);
@@ -50,7 +54,7 @@ namespace CVGenerator_CSharp
                 {
                     column
                         .Item().Text(personDetail.FullName)
-                        .FontSize(15).SemiBold().FontColor(Colors.Blue.Darken4);
+                            .SemiBold().FontColor(Colors.Blue.Darken4);
                 });
             });
         }
@@ -75,8 +79,7 @@ namespace CVGenerator_CSharp
                 {
                     x.Item()
                         .Hyperlink(repository.HtmlUrl)
-                        .Text(repository.Name)
-                        .FontSize(15);
+                        .Text(repository.Name);
                     x.Item()
                         .Text(repository.Description);
                     x.Item()
@@ -86,8 +89,34 @@ namespace CVGenerator_CSharp
 
         void ComposeDetail(IContainer container)
         {
-            container.Column(x =>
+            container.Column(c =>
             {
+                c.Item().Row(x =>
+                {
+                    //x.AutoItem().Hyperlink("mailto:wouters.sameddy@hotmail.com").Text("wouters.sameddy@hotmail.com");
+                    x.RelativeItem().AlignLeft().Element(t => ComposeURL(t, "Email: ", "mailto:wouters.sameddy@hotmail.com", "wouters.sameddy@hotmail.com"));
+                    x.RelativeItem().AlignRight().Element(t => ComposeURL(t, "Phone: ", "tel:+32487239038", "+32487239038"));
+                });
+                c.Item().Row(x =>
+                {
+                    //x.AutoItem().Hyperlink("mailto:wouters.sameddy@hotmail.com").Text("wouters.sameddy@hotmail.com");
+                    x.RelativeItem().AlignLeft().Element(t => t.Row(r2 => r2.AutoItem().Text($"Liecence: {personDetail.DriverLicence}")));
+                    x.RelativeItem().AlignRight().Element(t => ComposeURL(t, "Github: ", $"https://github.com/{personDetail.GitHub}", personDetail.GitHub));
+                });
+                c.Item().Row(x =>
+                {
+                    //x.AutoItem().Hyperlink("mailto:wouters.sameddy@hotmail.com").Text("wouters.sameddy@hotmail.com");
+                    x.AutoItem().Element(t => ComposeURL(t, "LinkedIn: ", personDetail.LinkedIn, $"{personDetail.FullName}"));
+                });
+            });
+        }
+
+        void ComposeURL(IContainer contaier, string key, string url, string urlText)
+        {
+            contaier.Row(r =>
+            {
+                r.AutoItem().Text(key);
+                r.AutoItem().Hyperlink(url).Text(urlText);
             });
         }
 
@@ -95,31 +124,58 @@ namespace CVGenerator_CSharp
         {
             container.Column(x =>
             {
-                x.Item()
+                x.Item().BorderTop(1)
                     .Text("Education")
-                    .FontSize(20);
+                    .FontSize(HeaderTextSize);
+                x.Spacing(20);
+                foreach (var education in personDetail.Education)
+                {
+                    x.Item().Element(e => ComposeEducation(e, education));
+                }
+            });
+        }
+
+        private void ComposeEducation(IContainer container, Education education)
+        {
+            container.Row(r => {
+                r.AutoItem().PaddingTop(2).PaddingRight(5).Text(education.a);
+                r.AutoItem().PaddingLeft(5).Element(e =>
+                {
+                    e.Column(c => {
+                        c.Item().Text(education.SchoolName);
+                        c.Item().Text(education.type);
+                    });
+                });
             });
         }
 
         void ComposeExpierences(IContainer container)
         {
-            /*container.Column(x =>
+            container.Column(x =>
             {
-                x.Item()
+                x.Item().BorderTop(1)
                     .Text("Expierence")
-                    .FontSize(20);
-                x.Item().Table(table =>
+                    .FontSize(HeaderTextSize);
+                x.Spacing(20);
+                foreach (var expierence in personDetail.Expierences)
                 {
-                    foreach (var item in personDetail.Expierences)
-                    {
-                        ComposeExpierence(table, item);
-                    }
-                });
-            });*/
+                    x.Item().Element(e => ComposeExpierence(e, expierence));
+                }
+            });
         }
 
-        void ComposeExpierence(TableDescriptor table, Expierence expierence)
+        void ComposeExpierence(IContainer container, Expierence expierence)
         {
+            container.Row(r => {
+                r.AutoItem().PaddingTop(2).PaddingRight(5).Text(expierence.a);
+                r.AutoItem().PaddingLeft(5).Element(e =>
+                {
+                    e.Column(c => {
+                        c.Item().Text(expierence.SchoolName);
+                        c.Item().Text(expierence.function);
+                    });
+                });
+            });
         }
 
         void ComposeRepositories(IContainer container)
@@ -127,9 +183,9 @@ namespace CVGenerator_CSharp
             container.Column(x =>
             {
                 x.Spacing(20);
-                x.Item()
+                x.Item().BorderTop(1)
                     .Text("My projects")
-                    .FontSize(20);
+                    .FontSize(HeaderTextSize);
                 foreach (var repository in repositories)
                 {
                     x.Item().Element(y => ComposeRepositories(y, repository));

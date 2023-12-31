@@ -1,0 +1,23 @@
+{
+  "FirstName": "<first-name>",
+  "LastName": "<last-name>",
+  "DriverLicence": "<licences>",
+  "GitHub": "<github account>",
+  "LinkedIn": "<Linkedin Link>",
+  "Education": [
+    {
+      "SchoolName": "<School-name>",
+      "type": "<course>",
+      "StartDate": "2018-01-01T00:00:00",
+      "EndDate": "2022-01-01T00:00:00"
+    }
+  ],
+  "Expierences": [
+    {
+      "SchoolName": "<Company-name>",
+      "function": "<job-function>",
+      "StartDate": "2018-01-01T00:00:00",
+      "EndDate": "2018-01-01T00:00:00"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CVGenerator_CSharp": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

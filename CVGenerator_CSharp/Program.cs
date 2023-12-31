@@ -1,9 +1,8 @@
 ﻿using CVGenerator_CSharp;
-using QuestPDF.Fluent;
 using QuestPDF.Previewer;
 
-GitHub gitHub = new GitHub();
+var pdetail = Newtonsoft.Json.JsonConvert.DeserializeObject<PersonDetail>(File.ReadAllText("./PersonDetails.json"));
 
-CVDocument document = new CVDocument("blitzdawolf", new PersonDetail());
+CVDocument document = new CVDocument(pdetail.GitHub, pdetail);
 document
     .ShowInPreviewer();
