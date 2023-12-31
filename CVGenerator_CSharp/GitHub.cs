@@ -17,7 +17,7 @@ namespace CVGenerator_CSharp
 
         public async Task<List<Repository>> GetRepositoriesAsync(string name)
         {
-            var res = await GetHTTPClient().Repository.GetAllForUser("blitzdawolf");
+            var res = await GetHTTPClient().Repository.GetAllForUser(name);
             return res.OrderByDescending(x => x.UpdatedAt).ToList();
         }
 
