@@ -63,7 +63,7 @@ namespace CVGenerator_CSharp
         {
             container.Column(x =>
             {
-                x.Item().Element(ComposeDetail);
+                x.Item().PaddingBottom(2).Element(ComposeDetail);
                 x.Item().Element(ComposeEducations);
                 x.Item().Element(ComposeExpierences);
                 x.Item().Element(ComposeRepositories);
@@ -132,6 +132,7 @@ namespace CVGenerator_CSharp
                 {
                     x.Item().Element(e => ComposeEducation(e, education));
                 }
+                x.Item().PaddingBottom(2);
             });
         }
 
@@ -161,6 +162,7 @@ namespace CVGenerator_CSharp
                 {
                     x.Item().Element(e => ComposeExpierence(e, expierence));
                 }
+                x.Item().PaddingBottom(2);
             });
         }
 
@@ -171,8 +173,9 @@ namespace CVGenerator_CSharp
                 r.AutoItem().PaddingLeft(5).Element(e =>
                 {
                     e.Column(c => {
-                        c.Item().Text(expierence.SchoolName);
+                        c.Item().Text(expierence.JobName);
                         c.Item().Text(expierence.function);
+                        c.Item().Text(expierence.Desctiption);
                     });
                 });
             });

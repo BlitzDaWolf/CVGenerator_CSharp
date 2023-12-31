@@ -14,8 +14,9 @@
   ],
   "Expierences": [
     {
-      "SchoolName": "<Company-name>",
+      "JobName": "<Company-name>",
       "function": "<job-function>",
+      "Desctiption": "<Job-desctiption>",
       "StartDate": "2018-01-01T00:00:00",
       "EndDate": "2018-01-01T00:00:00"
     }
