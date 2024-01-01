@@ -77,20 +77,18 @@ namespace CVGenerator
             {
                 c.Item().Row(x =>
                 {
-                    //x.AutoItem().Hyperlink("mailto:wouters.sameddy@hotmail.com").Text("wouters.sameddy@hotmail.com");
                     x.RelativeItem().AlignLeft().Element(t => ComposeURL(t, "Email: ", $"mailto:{personDetail.Email}", personDetail.Email));
                     x.RelativeItem().AlignRight().Element(t => ComposeURL(t, "Phone: ", $"tel:{personDetail.Phone}", personDetail.Phone));
                 });
                 c.Item().Row(x =>
                 {
-                    //x.AutoItem().Hyperlink("mailto:wouters.sameddy@hotmail.com").Text("wouters.sameddy@hotmail.com");
                     x.RelativeItem().AlignLeft().Element(t => t.Row(r2 => r2.AutoItem().Text($"Liecence: {personDetail.DriverLicence}")));
                     x.RelativeItem().AlignRight().Element(t => ComposeURL(t, "Github: ", $"https://github.com/{personDetail.GitHub}", personDetail.GitHub));
                 });
                 c.Item().Row(x =>
                 {
-                    //x.AutoItem().Hyperlink("mailto:wouters.sameddy@hotmail.com").Text("wouters.sameddy@hotmail.com");
                     x.AutoItem().Element(t => ComposeURL(t, "LinkedIn: ", personDetail.LinkedIn, $"{personDetail.FullName}"));
+                    x.RelativeItem().AlignRight().Element(t => t.Row(r2 => r2.AutoItem().Text($"Region: {personDetail.Region}")));
                 });
             });
         }
@@ -113,15 +111,6 @@ namespace CVGenerator
                     .Text("Skills")
                     .FontSize(HeaderTextSize);
                 x.Spacing(5);
-                /*for (int i = 0; i < personDetail.Skills.Count; i++)
-                {
-                    x.Item().Row(row =>
-                    {
-                        row.Spacing(5);
-                        row.AutoItem().Text($"{i+1}. ");
-                        row.RelativeItem().Element(x => ComposeSkill(x, personDetail.Skills[i]));
-                    });
-                }*/
 
                 for (int i = 0; i < Math.Ceiling(personDetail.Skills.Count / 3d); i++)
                 {
