@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CVGenerator.API.Context;
+using CVGenerator.API.Entity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CVGenerator.API.Controllers
@@ -7,6 +9,12 @@ namespace CVGenerator.API.Controllers
     [ApiController]
     public class SkillController : ControllerBase
     {
+        readonly CVDbContext database;
+
+        public SkillController(CVDbContext database)
+        {
+            this.database = database;
+        }
 
         // Skill
 
@@ -20,10 +28,12 @@ namespace CVGenerator.API.Controllers
         {
 
         }
-        [HttpPost("add")]
-        public void AddSkills()
+        [HttpPost("add/{personId:guid}")]
+        public void AddSkills(Skill skill, Guid personId)
         {
-
+            SkillEntity skillEntity = new SkillEntity(skill.Name, skill.Level) { PersonId = personId };
+            database.Skills.Add(skillEntity);
+            database.SaveChanges();
         }
     }
 }

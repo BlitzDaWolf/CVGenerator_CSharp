@@ -27,8 +27,9 @@ namespace CVGenerator.API.Controllers
             PersonDetail pDetail = person.ToDetail();
 
             CVDocument document = new CVDocument(person.GitHub, pDetail);
-            document.ShowInPreviewerAsync();
-            return Ok();
+
+            byte[] pdfBytes = document.GeneratePdf();
+            return new FileContentResult(pdfBytes, "application/pdf");
         }
 
         [HttpPost("person/add")]

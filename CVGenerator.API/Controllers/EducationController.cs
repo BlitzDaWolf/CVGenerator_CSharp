@@ -18,17 +18,17 @@ namespace CVGenerator.API.Controllers
 
         // Education
 
-        [HttpPatch("Education/edit")]
+        [HttpPatch("edit")]
         public void EditEducation(EducationEntity education)
         {
 
         }
-        [HttpDelete("Education/delete/{id:guid}")]
+        [HttpDelete("delete/{id:guid}")]
         public void DeleteEducation()
         {
 
         }
-        [HttpPost("Education/add/{personId:guid}")]
+        [HttpPost("add/{personId:guid}")]
         public void AddEducations(Education education, Guid personId)
         {
             EducationEntity entity = new EducationEntity(education);

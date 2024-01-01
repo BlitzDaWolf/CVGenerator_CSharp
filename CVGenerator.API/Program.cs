@@ -1,5 +1,9 @@
 using CVGenerator.API.Context;
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Infrastructure;
+using QuestPDF;
+
+Settings.License = LicenseType.Community;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CVGenerator.API.Context;
+using CVGenerator.API.Entity;
+using CVGenerator.API.Entiy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CVGenerator.API.Controllers
@@ -7,23 +10,33 @@ namespace CVGenerator.API.Controllers
     [ApiController]
     public class ExperienceController : ControllerBase
     {
+        readonly CVDbContext database;
+
+        public ExperienceController(CVDbContext database)
+        {
+            this.database = database;
+        }
 
         // Experience
 
-        [HttpPatch("Experience/edit")]
+        [HttpPatch("edit")]
         public void EditExperience()
         {
 
         }
-        [HttpDelete("Experience/delete/{id:guid}")]
+        [HttpDelete("delete/{id:guid}")]
         public void DeleteExperience()
         {
 
         }
-        [HttpPost("Experience/add")]
-        public void AddExperiences()
-        {
 
+        [HttpPost("add/{personId:guid}")]
+        public void AddExperiences(Expierence expierence, Guid personId)
+        {
+            ExpierenceEntity entity = new ExpierenceEntity(expierence);
+            entity.PersonId = personId;
+            database.Expierences.Add(entity);
+            database.SaveChanges();
         }
     }
 }
