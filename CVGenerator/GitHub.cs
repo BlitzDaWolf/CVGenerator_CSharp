@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CVGenerator_CSharp
+namespace CVGenerator
 {
     public class GitHub
     {

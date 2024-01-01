@@ -1,4 +1,4 @@
-﻿namespace CVGenerator_CSharp
+﻿namespace CVGenerator
 {
     public record Education (string SchoolName, string type, DateTime StartDate, DateTime? EndDate)
     {

@@ -1,4 +1,4 @@
-﻿using CVGenerator_CSharp;
+﻿using CVGenerator;
 using QuestPDF;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
@@ -14,5 +14,5 @@ Settings.License = LicenseType.Community;
 
 CVDocument document = new CVDocument(pdetail.GitHub, pdetail);
 document
-    .ShowInPreviewer();
-    // .GeneratePdf($"./CV-{pdetail.FullName}.pdf");
+    // .ShowInPreviewer();
+    .GeneratePdf($"./CV-{pdetail.FullName}.pdf");

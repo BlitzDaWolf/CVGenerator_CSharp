@@ -1,4 +1,4 @@
-﻿namespace CVGenerator_CSharp
+﻿namespace CVGenerator
 {
     public class PersonDetail
     {

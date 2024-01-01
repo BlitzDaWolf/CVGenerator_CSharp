@@ -4,7 +4,7 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using System.Reflection;
 
-namespace CVGenerator_CSharp
+namespace CVGenerator
 {
     public class CVDocument : IDocument
     {

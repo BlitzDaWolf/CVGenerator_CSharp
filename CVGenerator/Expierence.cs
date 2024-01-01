@@ -1,4 +1,4 @@
-﻿namespace CVGenerator_CSharp
+﻿namespace CVGenerator
 {
     public record Expierence(string JobName, string function, string Desctiption, DateTime StartDate, DateTime? EndDate)
     {
